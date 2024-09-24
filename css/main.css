@@ -1,0 +1,189 @@
+:root {
+    --main-dark: #16325B;
+    --main-dark-07: #16325bb9;
+    --main-blue: #227B94;
+    --alt-blue: #78B7D0;
+    --main-yello: #FFDC7F;
+}
+
+/*  */
+* {
+    box-sizing: border-box;
+    font-family: "Ubuntu", sans-serif;
+}
+
+/*  */
+
+body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+
+}
+
+/*  */
+.main-container {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+.main-container .win-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
+    background-color: #333;
+    padding: 20px;
+    width: 100%;
+    height: 120px;
+    max-width: 650px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: whitesmoke;
+    border-radius: 10px;
+}
+
+.main-container .win-message span {
+    margin: 0 6px;
+    font-weight: 500;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.main-container .win-message.active {
+    display: flex;
+}
+
+.main-container .lay-out {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-dark-07);
+    z-index: 1111;
+}
+
+.main-container .lay-out.not-active {
+    display: none;
+}
+
+.main-container .lay-out span {
+    position: relative;
+    z-index: 11111;
+    color: white;
+    background-color: var(--main-blue);
+    padding: 10px 14px;
+    text-transform: capitalize;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.main-container header {
+    position: relative;
+    margin: 0 auto 10px auto;
+    width: 100%;
+    max-width: 800px;
+    border-bottom: 2px solid var(--main-dark);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: capitalize;
+}
+
+
+
+.main-container .holder {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+}
+
+.main-container .holder.done {
+    opacity: 0.6;
+}
+
+.main-container .holder .card {
+    height: 150px;
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    overflow: hidden;
+    position: relative;
+}
+
+.main-container .holder .card.matched {
+    pointer-events: none;
+}
+
+.main-container .holder .card.stop-flibbing {
+    pointer-events: none;
+}
+
+
+.main-container .holder .card .front-face {
+    line-height: 150px;
+    text-align: center;
+    background-color: var(--main-blue);
+    transform: rotateY(0deg);
+}
+
+.main-container .holder .card .front-face::before {
+    content: "\21";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 60px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--main-yello);
+}
+
+.main-container .holder .card .back-face {
+    transform: rotateY(180deg);
+    background-color: var(--main-yello);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+}
+
+.main-container .holder .card.flibbed .front-face,
+.main-container .holder .card.matched .front-face {
+    transform: rotateY(-180deg);
+}
+
+.main-container .holder .card.flibbed .back-face,
+.main-container .holder .card.matched .back-face {
+    transform: rotateY(0deg);
+}
+
+.main-container .holder .card .face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transition: transform 0.3s;
+    border: 2px solid var(--main-dark);
+}

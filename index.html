@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="lay-out">
+        <span class="start-btn">start game</span>
+      </div>
+      <div class="win-message">
+        Good Job <span></span> ,You win with <span></span> wrong trys.
+      </div>
+      <header>
+        <div class="name">player name: <span class="p-name"></span></div>
+        <div class="trys">wrong trys:</div>
+      </header>
+      <div class="holder"></div>
+    </div>
+    <!-- audio -->
+    <div class="audio">
+      <audio
+        src="./music/Ah Shit Here We Go Again - GTA Sound Effect (HD)(MP3_160K).mp3"
+        class="start-m"
+        preload="auto"
+      ></audio>
+      <audio
+        src="./music/And His Name is JOHN CENA - Sound Effect (HD)(MP3_160K).mp3"
+        class="win-m"
+        preload="auto"
+      ></audio>
+      <audio
+        src="./music/Bruh - Sound Effect (HD)(MP3_160K).mp3"
+        class="wrong-m"
+        preload="auto"
+      ></audio>
+      <audio
+        src="./music/Ding - Sound Effect (HD)(MP3_160K).mp3"
+        class="matched-m"
+        preload="auto"
+      ></audio>
+    </div>
+    <!--  -->
+    <script src="main.js"></script>
+  </body>
+</html>
