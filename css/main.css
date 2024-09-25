@@ -122,7 +122,6 @@ body {
 
 }
 
-.main-container header .board-btn {}
 
 .main-container header .music-btn {
     margin-right: auto;
@@ -146,9 +145,6 @@ body {
     margin-right: 30px;
 }
 
-.main-container header .time .minute {}
-
-.main-container header .time .second {}
 
 .main-container header .music-btn::before {
     content: "";
@@ -171,6 +167,56 @@ body {
 .main-container header .music-btn.miuted i {
     opacity: 0.5;
 }
+
+@media(max-width:500px) {
+    .main-container header {
+        gap: 16px 0;
+    }
+
+    .main-container header>i,
+    .main-container header>div {
+        width: 50% !important;
+        margin: 0 !important;
+    }
+
+    .main-container header .name {
+        order: -1;
+        width: 100% !important;
+    }
+}
+
+.main-container .score-board {
+    padding: 0 20px;
+    height: 0;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.main-container .score-board.open {
+    height: 105px;
+}
+
+.main-container .score-board .t-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+}
+
+.main-container .score-board span {
+    width: 30%;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.main-container .score-board .score {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    color: #333;
+}
+
 
 
 .main-container .holder {

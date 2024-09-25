@@ -8,6 +8,7 @@ let startBtn = document.querySelector(".start-btn");
 let nameSpan = document.querySelector(".p-name");
 let trys = document.querySelector(".trys");
 let boardBt = document.querySelector("header .board-btn");
+let scoreBoard = document.querySelector(".score-board");
 let cards = [];
 // data for the game
 let wTrys = 0;
@@ -56,6 +57,23 @@ trys.innerHTML = `wrong trys: ${wTrys}`;
 let musicSt = true;
 let timer = [minute = 0 ,second = 0];
 let timerInt;
+let lastGames = [
+    {
+    gameName : "none",
+    gameTime :`00:00`,
+    gameTrys : "--",
+    },
+    {
+    gameName : "none",
+    gameTime :`00:00`,
+    gameTrys : "--",
+    },
+    {
+    gameName : "none",
+    gameTime :`00:00`,
+    gameTrys : "--",
+    },
+];
 
 // sound btn
 document.querySelector(".music-btn").addEventListener("click",()=>{
@@ -85,18 +103,29 @@ startBtn.addEventListener("click",()=>{
     shuffleRange(orderRange);
     cards.forEach((ele,ind)=>{
         ele.style.order = `${orderRange[ind]}`;
-    })
+    });
+    // restore the scores's list
+    if(window.localStorage.getItem("scoreList")){
+        lastGames = JSON.parse(window.localStorage.getItem("scoreList"));
+        scoreBoard.querySelectorAll(".score").forEach((score,ind)=>{
+            score.querySelector(".name").innerHTML = `${lastGames[ind].gameName}`;
+            score.querySelector(".time").innerHTML = `${lastGames[ind].gameTime}`;
+            score.querySelector(".trys").innerHTML = `${lastGames[ind].gameTrys}`;
+
+        })
+    }
     // starting background music
     setTimeout(()=>{
         document.querySelector(".background-m").play();
     },1500)
     // timer function
-    document.querySelector(".time .minute").innerHTML = `0${minute}`;
+    document.querySelector(".time .minute").innerHTML = `00`;
     document.querySelector(".time .second").innerHTML = `0${second}`;
      timerInt = setInterval(()=>{
         second++;
-        (second % 60 > 9) ? document.querySelector(".time .second").innerHTML = `${second % 60}` : document.querySelector(".time .second").innerHTML = `0${second % 60}`;;
-        document.querySelector(".time .minute").innerHTML = `0${Math.floor(second / 60)}`;
+        (second % 60 > 9) ? document.querySelector(".time .second").innerHTML = `${second % 60}` : document.querySelector(".time .second").innerHTML = `0${second % 60}`;
+        minute = Math.floor(second / 60);
+        document.querySelector(".time .minute").innerHTML = `0${minute}`;
     },1000)
 })
 
@@ -104,6 +133,7 @@ startBtn.addEventListener("click",()=>{
 // board function
 boardBt.addEventListener("click",()=>{
     boardBt.classList.toggle("open");
+    scoreBoard.classList.toggle("open");
 })
 
 // generating cards function
@@ -168,17 +198,31 @@ function generatingCards(){
                     if(matchedCards.length  == numberOfItems * 2){
                         // rnd game message 
                         setTimeout(()=>{
+                            // crete an object containe the information about the current game
+                            let currentGame = {
+                                gameName : playerName,
+                                gameTrys : wTrys,
+                                gameTime :`${minute}:${second % 60}`
+                            };
+                            // add the current score to the scores's list
+                            if(lastGames.length == 3){
+                                lastGames[2] = lastGames[1];
+                                lastGames[1] = lastGames[0]; 
+                                lastGames[0] = currentGame;
+                            }else{lastGames.push(currentGame)}
+                            // add the scores's to the locale stoarge
+                            window.localStorage.setItem("scoreList",JSON.stringify(lastGames));
                             clearInterval(timerInt);
-                            document.querySelectorAll(".win-message span")[0].innerHTML = `Good Job '${playerName}'  , You did it and win.`;
-                            document.querySelectorAll(".win-message span")[1].innerHTML = `- '${wTrys}' wrong trys.`;
-                            document.querySelectorAll(".win-message span")[2].innerHTML = `- '${minute}:${(second > 9) ? second  : `0${second}` }' s.`;
+                            document.querySelectorAll(".win-message span")[0].innerHTML = `Good Job '${playerName}'  , You win.`;
+                            document.querySelectorAll(".win-message span")[1].innerHTML = `- '${wTrys}' Wrong trys.`;
+                            document.querySelectorAll(".win-message span")[2].innerHTML = `- 'Time: ${minute}:${(second > 9) ? second % 60  : `0${second % 60}` }' s.`;
                             mainHolder.classList.add("done");
                             document.querySelector(".win-message").classList.add("active");
+                            // stoping background music
+                            document.querySelector(".background-m").pause();
+                            // win game audio
+                            if (musicSt) document.querySelector(".audio .win-m").play();
                         },300)
-                        // stoping background music
-                        document.querySelector(".background-m").pause();
-                        // win game audio
-                        if (musicSt) document.querySelector(".audio .win-m").play();
                     }
                 }else{
                     // wrong card audio
