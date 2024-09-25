@@ -173,12 +173,6 @@ body {
         gap: 16px 0;
     }
 
-    .main-container header>i,
-    .main-container header>div {
-        width: 50% !important;
-        margin: 0 !important;
-    }
-
     .main-container header .name {
         order: -1;
         width: 100% !important;
