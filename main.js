@@ -7,8 +7,8 @@ let mainHolder = document.querySelector(".holder");
 let startBtn = document.querySelector(".start-btn");
 let nameSpan = document.querySelector(".p-name");
 let trys = document.querySelector(".trys");
+let boardBt = document.querySelector("header .board-btn");
 let cards = [];
-
 // data for the game
 let wTrys = 0;
 let items = [
@@ -47,23 +47,63 @@ let items = [
 let numberOfItems = items.length;
 let orderRange = [];
 let playerName = '';
+
+
 // wrong trys
 trys.innerHTML = `wrong trys: ${wTrys}`;
 
+// sitting option
+let musicSt = true;
+let timer = [minute = 0 ,second = 0];
+let timerInt;
+
+// sound btn
+document.querySelector(".music-btn").addEventListener("click",()=>{
+    document.querySelector(".music-btn").classList.toggle("miuted");
+    if(musicSt){
+        musicSt = false;
+        document.querySelector(".background-m").pause();
+    }else{
+        musicSt = true;
+        document.querySelector(".background-m").play();
+    }
+})
 
 // satrting the game function's
 startBtn.addEventListener("click",()=>{
-    document.querySelector(".audio .start-m").play();
-    let Name = window.prompt("Player Name","Unknown")
+    // starting game sound 
+    if(musicSt)  document.querySelector(".audio .start-m").play();
+    // insert player name
+    let Name = window.prompt("Player Name","Unknown");
     nameSpan.innerHTML = Name.toUpperCase();
     playerName = Name;
+    // generating cards
     generatingCards();
+    // remove the layout 
     document.querySelector(".lay-out").classList.add("not-active");
+    //shuffleing cards
     shuffleRange(orderRange);
     cards.forEach((ele,ind)=>{
         ele.style.order = `${orderRange[ind]}`;
     })
+    // starting background music
+    setTimeout(()=>{
+        document.querySelector(".background-m").play();
+    },1500)
+    // timer function
+    document.querySelector(".time .minute").innerHTML = `0${minute}`;
+    document.querySelector(".time .second").innerHTML = `0${second}`;
+     timerInt = setInterval(()=>{
+        second++;
+        (second % 60 > 9) ? document.querySelector(".time .second").innerHTML = `${second % 60}` : document.querySelector(".time .second").innerHTML = `0${second % 60}`;;
+        document.querySelector(".time .minute").innerHTML = `0${Math.floor(second / 60)}`;
+    },1000)
+})
 
+
+// board function
+boardBt.addEventListener("click",()=>{
+    boardBt.classList.toggle("open");
 })
 
 // generating cards function
@@ -75,7 +115,6 @@ function generatingCards(){
         let backF = document.createElement("div");
         let itemImg = document.createElement("img");
         let backI = document.createElement("i");
-        // let backI = document.createElement("i");
         // addign calsses
         card.className = "card";
         frontF.className = "front-face face";
@@ -123,21 +162,27 @@ function generatingCards(){
                         e.classList.add("matched");
                     });
                     // matched card audio
-                    document.querySelector(".audio .matched-m").play();
+                    if (musicSt) document.querySelector(".audio .matched-m").play();
                     // check if the game is finished -- all card matched
                     matchedCards = document.querySelectorAll(".card.matched");
                     if(matchedCards.length  == numberOfItems * 2){
+                        // rnd game message 
                         setTimeout(()=>{
-                            document.querySelectorAll(".win-message span")[0].innerHTML = `'${playerName}'`;
-                            document.querySelectorAll(".win-message span")[1].innerHTML = `'${wTrys}'`;
+                            clearInterval(timerInt);
+                            document.querySelectorAll(".win-message span")[0].innerHTML = `Good Job '${playerName}'  , You did it and win.`;
+                            document.querySelectorAll(".win-message span")[1].innerHTML = `- '${wTrys}' wrong trys.`;
+                            document.querySelectorAll(".win-message span")[2].innerHTML = `- '${minute}:${(second > 9) ? second  : `0${second}` }' s.`;
                             mainHolder.classList.add("done");
                             document.querySelector(".win-message").classList.add("active");
                         },300)
-                        document.querySelector(".audio .win-m").play();
+                        // stoping background music
+                        document.querySelector(".background-m").pause();
+                        // win game audio
+                        if (musicSt) document.querySelector(".audio .win-m").play();
                     }
                 }else{
                     // wrong card audio
-                    document.querySelector(".audio .wrong-m").play();
+                    if (musicSt) document.querySelector(".audio .wrong-m").play();
                     // cards is not matched 
                     wTrys++;
                     trys.innerHTML = `wrong trys: ${wTrys}`;
@@ -176,6 +221,5 @@ function shuffleRange(Arr){
 
 
 
-// ------- callign back the functions
 
 

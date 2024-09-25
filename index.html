@@ -20,16 +20,30 @@
         <span class="start-btn">start game</span>
       </div>
       <div class="win-message">
-        Good Job <span></span> ,You win with <span></span> wrong trys.
+        <span></span> <span></span>
+        <span></span>
       </div>
       <header>
+        <!-- <i class="fas fa-bars board-btn"></i> -->
         <div class="name">player name: <span class="p-name"></span></div>
+        <div class="music-btn">
+          <i class="fa fa-bullhorn"></i>
+        </div>
+        <div class="time">
+          time:
+          <span class="minute">00</span>:<span class="second">00</span>
+        </div>
         <div class="trys">wrong trys:</div>
       </header>
       <div class="holder"></div>
     </div>
     <!-- audio -->
     <div class="audio">
+      <audio
+        class="background-m"
+        src="./music/Sneaky Snitch (Kevin MacLeod) - Background Music (HD)(MP3_160K).mp3"
+        loop
+      ></audio>
       <audio
         src="./music/Ah Shit Here We Go Again - GTA Sound Effect (HD)(MP3_160K).mp3"
         class="start-m"
