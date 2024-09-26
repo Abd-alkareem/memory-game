@@ -241,6 +241,13 @@ body {
     position: relative;
 }
 
+@media(max-width:798px) {
+    .main-container .holder .card {
+        height: 100px;
+        width: 100px;
+    }
+}
+
 @media(max-width:500px) {
     .main-container .holder .card {
         height: 75px;
